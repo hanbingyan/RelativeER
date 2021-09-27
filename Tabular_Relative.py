@@ -257,10 +257,10 @@ for sess in range(n_instance):
 
     print(np.array(state_hist[-20:]))
 
-with open('greedy_Q.pickle', 'wb') as fp:
+with open('tol002_Q.pickle', 'wb') as fp:
     pickle.dump(Q_hist, fp)
 
-with open('greedy_price.pickle', 'wb') as fp:
+with open('tol002_price.pickle', 'wb') as fp:
     pickle.dump(end_price, fp)
 
 
