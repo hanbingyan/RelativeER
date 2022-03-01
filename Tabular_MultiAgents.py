@@ -20,15 +20,15 @@ Transition = namedtuple('Transition', ('state', 'action', 'next_state', 'reward'
 MEM_SIZE = 1000
 BATCH_SIZE = 8
 GAMMA = 0.95
-LAM = 1/MEM_SIZE/0.05
+LAM = 0.2
 
-num_sub = 2000000
-eps = 1e-5
+num_sub = 800000
+eps = 1e-6
 alpha = 0.15
 
 n_instance = 5
-n_agents = 3
-actions_space = np.arange(1.2, 2.1, 0.04)
+n_agents = 6
+actions_space = np.arange(1.0, 2.5, 0.3)
 quality = np.ones(n_agents) * 2
 margin_cost = np.ones(n_agents)
 horizon = 1 / 4
@@ -76,7 +76,7 @@ class PERMemory(object):
         #         indices = [0]
         samples = [self.memory[idx] for idx in indices]
 
-        if steps_done % 100000 == 0:
+        if steps_done % 10000 == 0:
             print(bcolors.RED + 'Step', steps_done, 'Memory priority min', self.priorities.min(), 'is at position',
                   self.priorities.argmin(), bcolors.ENDC)
             print(bcolors.RED + 'Memory priority max', self.priorities.max(), 'is at position',
@@ -115,7 +115,7 @@ def replay_classic_opt(agent, mem, BS):
     transitions, indices, weights = mem.sample(agent, BS)
     batch = Transition(*zip(*transitions))
 
-    if steps_done % 100000 == 0:
+    if steps_done % 10000 == 0:
         print('Sampled States', np.unravel_index(batch.state[0], state_ravel))
 
     delta = np.zeros(BS)
@@ -217,7 +217,7 @@ for sess in range(n_instance):
         state = next_state
         state_hist[steps_done % 1000] = state
 
-        if i_episode % 100000 == 0:
+        if i_episode % 1000 == 0:
             print(bcolors.GREEN + 'Instance', sess, 'Count', count, 'Steps done:', steps_done, bcolors.ENDC)
             uniq0, freq0 = np.unique(np.unravel_index(state_hist, state_ravel)[0], return_counts=True)
             fq0 = freq0 / freq0.sum()
