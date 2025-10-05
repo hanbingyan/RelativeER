@@ -1,5 +1,8 @@
 # Relative Experience Replay
 
+This repo contains code for the paper `Algorithmic pricing with independent learners and relative experience replay` 
+published in ICAIF'25, which is available here https://arxiv.org/abs/2102.09139
+
 ## Files
 
 - `Tabular_Default.py` replicates the results in Calvano et al. (2020, AER). The output implies the profit ratios in Figure 1.
